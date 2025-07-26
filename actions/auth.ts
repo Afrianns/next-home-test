@@ -1,21 +1,59 @@
+"use server";
+import axios from "axios";
 interface loginType {
   username: string;
   password: string;
 }
 
 enum rolesEnum {
-  USR = "USR",
-  ADM = "ADM",
+  USR = "User",
+  ADM = "Admin",
 }
 
 interface registerType extends loginType {
   role: rolesEnum;
 }
 
-export const Login = ({ username, password }: loginType) => {
+export const Login = async ({ username, password }: loginType) => {
   console.log(username, password);
+  try {
+    const response = await axios.post(
+      "https://test-fe.mysellerpintar.com/api/auth/login",
+      {
+        username: username,
+        password: password,
+      }
+    );
+
+    if (response.status == 200) {
+      console.log(response.status);
+      return {
+        status: response.status,
+        result: response.data,
+        message: "Successfully Login",
+      };
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const Register = ({ username, password, role }: registerType) => {
-  console.log(username, password, role);
+export const Register = async ({ username, password, role }: registerType) => {
+  console.log(username, password);
+
+  axios
+    .post("https://test-fe.mysellerpintar.com/api/auth/register", {
+      username: username,
+      password: password,
+      role: role,
+    })
+    .then(function (response) {
+      if (response.status == 201) {
+        return { status: response.status, message: "Successfully Register" };
+      }
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };

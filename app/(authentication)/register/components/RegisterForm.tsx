@@ -22,9 +22,7 @@ import { usernameValidation } from "@/validation/usernameValidation";
 import { passwordValidation } from "@/validation/passwordValidation";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
@@ -38,8 +36,8 @@ import { cn } from "@/lib/utils";
 import { Register } from "@/actions/auth";
 
 enum rolesEnum {
-  ADM = "ADM",
-  USR = "USR",
+  ADM = "Admin",
+  USR = "User",
 }
 
 const FormSchema = z.object({
@@ -68,7 +66,7 @@ export default function RegisterForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     toast("You submitted the following values", {
       description: (
         <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
@@ -78,7 +76,8 @@ export default function RegisterForm() {
     });
     const { username, password, role } = data;
 
-    const result = Register({ username, password, role });
+    const result = await Register({ username, password, role });
+    console.log(result)
   }
   return (
     <Form {...form}>

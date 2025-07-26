@@ -1,0 +1,50 @@
+{
+    "data": {
+        "id": "401441db-2213-4238-9afc-6e8e3354adcb",
+        "username": "jackson",
+        "role": "User",
+        "password": "$2a$10$PtXKViXyHPxQp8lH.9ma9evzA1IQ4kAjBaS43aMOXrkh8V1FkTOka",
+        "noHasPass": "Jackson@12",
+        "createdAt": "2025-07-26T07:18:54.627Z",
+        "updatedAt": "2025-07-26T07:18:54.627Z"
+    },
+    "status": 201,
+    "statusText": "Created",
+    "headers": {
+        "content-length": "232",
+        "content-type": "application/json; charset=utf-8"
+    },
+    "config": {
+        "transitional": {
+            "silentJSONParsing": true,
+            "forcedJSONParsing": true,
+            "clarifyTimeoutError": false
+        },
+        "adapter": [
+            "xhr",
+            "http",
+            "fetch"
+        ],
+        "transformRequest": [
+            null
+        ],
+        "transformResponse": [
+            null
+        ],
+        "timeout": 0,
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+        "maxContentLength": -1,
+        "maxBodyLength": -1,
+        "env": {},
+        "headers": {
+            "Accept": "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        },
+        "method": "post",
+        "url": "https://test-fe.mysellerpintar.com/api/auth/register",
+        "data": "{\"username\":\"jackson\",\"password\":\"Jackson@12\",\"role\":\"User\"}",
+        "allowAbsoluteUrls": true
+    },
+    "request": {}
+}
