@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { cn } from "@/lib/utils";
 import { EyeClosed } from "lucide-react";
 import { Eye } from "lucide-react";
@@ -15,7 +13,7 @@ function Input({
   setEye?: (a: boolean) => void;
 }) {
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <input
         type={type}
         data-slot="input"
