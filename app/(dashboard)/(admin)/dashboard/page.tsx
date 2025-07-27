@@ -5,7 +5,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-import TablePage from "@/components/table/page";
+import TablePage from "@/components/table/article-page/page";
 
 export default function AdminPage() {
   return (

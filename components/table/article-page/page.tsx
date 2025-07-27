@@ -1,5 +1,5 @@
-import { columns, ArticleType } from "./columns";
-import { DataTable } from "./data-table";
+import { columns, ArticleType } from "@/components/table/article-page/article-type";
+import { DataTable } from "@/components/table/data-table";
 
 async function getData(): Promise<ArticleType[]> {
   // Fetch data from your API here.
@@ -201,7 +201,7 @@ export default async function TablePage() {
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={data} type="title" />
     </div>
   );
 }

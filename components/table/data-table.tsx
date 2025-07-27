@@ -18,18 +18,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
+
+import Combobox from "@/components/combobox";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  type: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  type,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -47,24 +51,22 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="overflow-hidden border">
-        <div className="flex items-center justify-between  mx-10">
-          <div className="flex items-center py-4">
+        <div className="flex items-center justify-between mx-10">
+          <div className="flex items-center gap-x-4 py-4">
+            {type == "title" && <Combobox />}
             <Input
-              placeholder="Filter Titles..."
-              value={
-                (table.getColumn("title")?.getFilterValue() as string) ?? ""
-              }
+              placeholder={"search by " + type + "..."}
+              value={(table.getColumn(type)?.getFilterValue() as string) ?? ""}
               onChange={(event) =>
-                table.getColumn("title")?.setFilterValue(event.target.value)
+                table.getColumn(type)?.setFilterValue(event.target.value)
               }
               className="max-w-sm"
             />
           </div>
           <Button className="bg-blue-500 text-white px-5" size="sm">
-            + New Article
+            + New {type}
           </Button>
         </div>
-
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
