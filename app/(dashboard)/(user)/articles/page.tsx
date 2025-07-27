@@ -1,12 +1,11 @@
 "use client";
 
 import Combobox from "@/components/combobox";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 
-export default function DashboardUser() {
+export default function UserPage() {
   return (
     <div>
       <div className="w-full h-[450px] relative">
