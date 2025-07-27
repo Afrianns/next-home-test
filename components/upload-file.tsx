@@ -8,12 +8,18 @@ import {
 
 import { useState } from "react";
 
-export default function UploadIMG() {
-  const [files, setFiles] = useState<File[] | undefined>();
+export default function UploadIMG({
+  files,
+  setFiles,
+}: {
+  files: File[] | undefined;
+  setFiles: (a: File[]) => void;
+}) {
+  // const [files, setFiles] = useState<File[] | undefined>();
+
   const [filePreview, setFilePreview] = useState<string | undefined>();
 
   const handleDrop = (files: File[]) => {
-    console.log(files);
     setFiles(files);
     if (files.length > 0) {
       const reader = new FileReader();
@@ -27,7 +33,7 @@ export default function UploadIMG() {
   };
   return (
     <Dropzone
-      accept={{ image: [".png", ".jpg"] }}
+      accept={{ "image/*": [".png", ".jpg"] }}
       onDrop={handleDrop}
       onError={console.error}
       src={files}
