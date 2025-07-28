@@ -4,7 +4,15 @@ import Combobox from "./combobox";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
 
-export default function ArticleSearchable() {
+export default function ArticleSearchable({
+  withCategory = true,
+  className,
+  title,
+}: {
+  withCategory?: boolean;
+  className?: string;
+  title: string;
+}) {
   const [search, setSearch] = useState("");
 
   const [category, setCategory] = useState("");
@@ -28,12 +36,15 @@ export default function ArticleSearchable() {
     setSearch(event?.target.value);
   };
   return (
-    <div className="flex items-center gap-x-3 bg-blue-400 p-2 rounded-lg w-full max-w-[500px] shadow-lg max-md:flex-col max-md:gap-y-2">
-      <Combobox category={category} setCategory={setCategory} />
+    <div className={"flex items-center gap-x-3 " + className}>
+      {withCategory && (
+        <Combobox category={category} setCategory={setCategory} />
+      )}
       <Input
         type="text"
         className="bg-white"
         value={search}
+        placeholder={title}
         onChange={handleInput}
       />
     </div>

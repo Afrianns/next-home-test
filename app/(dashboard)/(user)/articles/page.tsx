@@ -29,7 +29,10 @@ export default async function UserPage({
             The Journal: Design Resources, Interviews, and Industry News
           </h1>
           <p className="text-white">Your daily dose of design insight</p>
-          <ArticleSearchable />
+          <ArticleSearchable
+            className="bg-blue-400 p-2 rounded-lg w-full max-w-[500px] shadow-lg max-md:flex-col max-md:gap-y-2"
+            title="Search by title..."
+          />
         </div>
       </div>
       <Suspense fallback={<ArticlesSkeleton />}>
