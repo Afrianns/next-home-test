@@ -9,6 +9,17 @@ import {
 } from "@/components/ui/table";
 
 import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
@@ -22,18 +33,13 @@ import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-// interface DataTableProps<TData, TValue> {
-//   columns: ColumnDef<TData, TValue>[];
-//   data: TData[];
-//   type: string;
-// }
 
-import { ArticleType } from "@/components/table/article-page/article-type";
-import Image from "next/image";
 import PaginationMenu from "../../pagination";
 import { CategoryType } from "./category-type";
 import { convertDate } from "@/utils/convertDate";
 import ArticleSearchable from "@/components/articles-searchable";
+import DialogCard from "@/components/dialog-card";
+import { Button } from "@/components/ui/button";
 
 interface allCategoriesType {
   data: CategoryType[];
@@ -56,6 +62,7 @@ export function DataTable({ categories }: { categories: allCategoriesType }) {
   console.log(categories);
   return (
     <div>
+      <p className="p-4 px-5">Total Category: {categories.totalData}</p>
       <div className="overflow-hidden border">
         <div className="flex items-center justify-between mx-10 my-3">
           <div className="flex items-center gap-x-4 py-4">
@@ -65,12 +72,14 @@ export function DataTable({ categories }: { categories: allCategoriesType }) {
               title="search by category..."
             />
           </div>
-          <Link
-            href="/dashboard/article/create"
-            className="bg-blue-500 text-white py-1 px-3 rounded"
-          >
-            + New Category
-          </Link>
+          <DialogCard
+            name="Add"
+            button={
+              <Button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded">
+                Add Category
+              </Button>
+            }
+          />
         </div>
         <Table>
           <TableHeader>
@@ -95,12 +104,34 @@ export function DataTable({ categories }: { categories: allCategoriesType }) {
                   </TableCell>
                   <TableCell className="px-10">
                     <div className="flex items-center gap-2">
-                      <Link href="#" className="text-blue-500 underline">
-                        Edit
-                      </Link>
-                      <Link href="#" className="text-red-500 underline">
-                        Delete
-                      </Link>
+                      <DialogCard
+                        name="Edit"
+                        button={
+                          <Link href="#" className="text-blue-500 underline">
+                            Edit
+                          </Link>
+                        }
+                      />
+                      <Dialog>
+                        <DialogTrigger className="text-red-500 underline">
+                          Delete
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Are you absolutely sure?</DialogTitle>
+                            <DialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete your account and remove your
+                              data from our servers.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <DialogFooter>
+                            <Button className="bg-blue-500 hover:bg-blue-600">
+                              Confirm
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </TableCell>
                 </TableRow>

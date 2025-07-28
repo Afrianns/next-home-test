@@ -30,7 +30,7 @@ export default async function UserPage({
           </h1>
           <p className="text-white">Your daily dose of design insight</p>
           <ArticleSearchable
-            className="bg-blue-400 p-2 rounded-lg w-full max-w-[500px] shadow-lg max-md:flex-col max-md:gap-y-2"
+            className="bg-blue-400 p-2 rounded-lg w-full max-w-[500px] shadow-lg"
             title="Search by title..."
           />
         </div>

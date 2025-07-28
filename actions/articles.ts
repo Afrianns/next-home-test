@@ -80,14 +80,14 @@ export const GetCategories = async ({
   search,
 }: {
   page: number | undefined;
-  search: string | undefined;
+  search?: string | undefined;
 }) => {
   let url = `${baseURL}/categories`;
   try {
     const params = new URLSearchParams();
 
     if (page && page !== 1) params.set("page", page.toString());
-    if (search) params.set("search", search);
+    // if (search) params.set("search", search);
 
     const fullUrl = `${url}?${params.toString()}`;
 
@@ -106,17 +106,4 @@ export const GetCategories = async ({
     }
     throw new Error("there is an error");
   }
-};
-
-const callError = (error: any, route: string) => {
-  let err = error as AxiosError;
-  if (err) {
-    if (err.status == 404) {
-      return redirect(route);
-    } else {
-      console.log(err);
-      throw Error(`An error occur: ${err.message}`);
-    }
-  }
-  throw new Error("there is an error");
 };

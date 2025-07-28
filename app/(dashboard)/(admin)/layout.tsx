@@ -4,6 +4,15 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 export default function adminLayout({
   children,
 }: Readonly<{
@@ -15,7 +24,7 @@ export default function adminLayout({
         <AppSidebar />
         <main className="bg-gray-300 w-full min-h-screen">
           <div className="bg-white">
-            <div className="flex items-center justify-between w-full px-4 py-5 max-w-[1080px] mx-auto">
+            <div className="flex items-center justify-between w-full px-4 py-5 max-w-[980px] mx-auto max-md:px-4">
               <div className="flex items-center gap-x-3">
                 <SidebarTrigger />
                 <h1 className="text-lg font-semibold">Admin Dashboard</h1>
@@ -25,7 +34,17 @@ export default function adminLayout({
                   <AvatarImage src="/young-male-designer.jpg" alt="@shadcn" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <p>Name</p>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>Name</DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Billing</DropdownMenuItem>
+                    <DropdownMenuItem>Team</DropdownMenuItem>
+                    <DropdownMenuItem>Subscription</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           </div>

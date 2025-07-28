@@ -34,7 +34,7 @@ export default function PaginationMenu({
     return redirect(`?page=${totalPage}`);
   }
   return (
-    <Pagination className="my-10">
+    <Pagination className="mt-10">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
