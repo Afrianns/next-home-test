@@ -39,7 +39,7 @@ export const columns: ColumnDef<ArticleType>[] = [
           alt="title"
           width={50}
           height={50}
-          className="w-24 h-24"
+          className="w-15 h-15"
         ></Image>
       );
     },
@@ -48,14 +48,14 @@ export const columns: ColumnDef<ArticleType>[] = [
     accessorKey: "title",
     header: "Title",
     cell: ({ row }) => {
-      return <p className="w-[200px] text-wrap">{row.original.title}</p>;
+      return <p className="w-[150px] text-wrap">{row.original.title}</p>;
     },
   },
   {
     accessorKey: "category",
     header: "Category",
     cell: ({ row }) => {
-      return <p className="text-wrap">{row.original.category.name}</p>;
+      return <p className="text-wrap w-fit">{row.original.category.name}</p>;
     },
   },
   {

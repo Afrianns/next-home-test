@@ -6,7 +6,7 @@ import {
   DropzoneEmptyState,
 } from "@/components/ui/shadcn-io/dropzone";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function UploadIMG({
   files,
@@ -32,25 +32,40 @@ export default function UploadIMG({
     }
   };
   return (
-    <Dropzone
-      accept={{ "image/*": [".png", ".jpg"] }}
-      onDrop={handleDrop}
-      onError={console.error}
-      src={files}
-      className="w-[200px] h-[150px] border-dashed"
-    >
-      <DropzoneEmptyState />
-      <DropzoneContent>
-        {filePreview && (
-          <div className="h-[100px] w-full">
-            <img
-              alt="Preview"
-              className="absolute top-0 left-0 h-full w-full object-cover"
-              src={filePreview}
-            />
-          </div>
-        )}
-      </DropzoneContent>
-    </Dropzone>
+    <div className="bg-white w-fit p-1">
+      <Dropzone
+        accept={{ "image/*": [".png", ".jpg"] }}
+        onDrop={handleDrop}
+        onError={console.error}
+        src={files}
+        className="w-[200px] h-[150px] border-dashed p-0 m-0"
+      >
+        <DropzoneEmptyState />
+        <DropzoneContent>
+          {filePreview && (
+            <div className="h-full w-full">
+              <img
+                alt="Preview"
+                className="absolute top-0 left-0 h-full w-full object-cover"
+                src={filePreview}
+              />
+            </div>
+          )}
+        </DropzoneContent>
+      </Dropzone>
+      {filePreview && (
+        <div className="flex justify-center mx-auto">
+          <p
+            onClick={() => {
+              setFiles([]);
+              setFilePreview(undefined);
+            }}
+            className="text-red-500 underline"
+          >
+            Delete
+          </p>
+        </div>
+      )}
+    </div>
   );
 }

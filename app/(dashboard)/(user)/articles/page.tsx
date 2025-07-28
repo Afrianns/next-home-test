@@ -1,13 +1,21 @@
-"use client";
-
-import Combobox from "@/components/combobox";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import AllArticles from "./components/render-articles";
+import ArticleSearchable from "@/components/articles-searchable";
+import Nav from "@/components/nav";
+import { Suspense } from "react";
+import ArticlesSkeleton from "./articles-skeleton";
+import { useCategoryStore } from "@/store/categoriesStore";
 
-export default function UserPage() {
+export default async function UserPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: number; cId?: string; search?: string }>;
+}) {
+  let { page, cId, search } = await searchParams;
+
   return (
     <div>
+      <Nav className="md:absolute z-10 w-full md:text-white" />
       <div className="w-full h-[450px] relative">
         <Image
           src="/young-male-designer.jpg"
@@ -21,41 +29,12 @@ export default function UserPage() {
             The Journal: Design Resources, Interviews, and Industry News
           </h1>
           <p className="text-white">Your daily dose of design insight</p>
-
-          <div className="flex items-center gap-x-3 bg-blue-400 p-2 rounded-lg w-full max-w-[500px] shadow-lg max-md:flex-col max-md:gap-y-2">
-            <Combobox />
-            <Input type="text" className="bg-white" />
-          </div>
+          <ArticleSearchable />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-2 w-full max-w-[1000px] mx-auto space-y-3 max-md:grid-cols-2 max-sm:grid-cols-1 max-sm:max-w-[500px]">
-        {[1, 2, 3].map((key) => {
-          return (
-            <section className="p-3 space-y-2 w-full max-w-[500px]" key={key}>
-              <Image
-                src="/young-male-designer.jpg"
-                alt="Image"
-                className="rounded-md object-cover"
-                width={500}
-                height={500}
-              />
-              <span className="text-xs leading-none font-medium text-gray-600">
-                05 Agustus 2025
-              </span>
-              <h3 className="text-md font-semibold">
-                Cyber security essentials for every developer.
-              </h3>
-              <p className="text-gray-600 text-sm">
-                consectetur adipisicing elit. In error deleniti nam. Lorem
-                ipsum, dolor sit amet consectetur adipisicing elit.
-              </p>
-              <Badge variant="secondary" className="text-blue-600 bg-blue-100">
-                Badge
-              </Badge>
-            </section>
-          );
-        })}
-      </div>
+      <Suspense fallback={<ArticlesSkeleton />}>
+        <AllArticles page={page} category={cId} search={search} />
+      </Suspense>
     </div>
   );
 }

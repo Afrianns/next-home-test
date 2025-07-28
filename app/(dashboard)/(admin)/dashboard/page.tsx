@@ -9,7 +9,7 @@ import TablePage from "@/components/table/article-page/page";
 
 export default function AdminPage() {
   return (
-    <Card className="w-full max-w-[1080px] mx-auto mt-5 p-0">
+    <Card className="w-full max-w-[1080px] mx-auto my-5 p-0">
       <CardHeader></CardHeader>
       <CardContent className="px-0">
         <TablePage />

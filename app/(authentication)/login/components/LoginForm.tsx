@@ -22,6 +22,7 @@ import { passwordValidation } from "@/validation/passwordValidation";
 import { Login } from "@/actions/auth";
 import { exportPKCS8, exportSPKI, generateKeyPair } from "jose";
 import { createSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   username: usernameValidation,
@@ -41,23 +42,17 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-
     const { username, password } = data;
 
     const result = await Login({ username, password });
     console.log(result);
     if (result?.result) {
       createSession(result.result);
+      toast("Successfully Login");
+      redirect("/articles");
     }
   }
-  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

@@ -30,7 +30,7 @@ export default function adminLayout({
             </div>
           </div>
           <Separator />
-          <div className="px-4">{children}</div>
+          <div className="px-4 max-w-[920px] w-full mx-auto">{children}</div>
         </main>
       </SidebarProvider>
     </TooltipProvider>

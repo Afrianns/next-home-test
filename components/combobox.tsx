@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,32 +15,75 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+import { GetAllCategories } from "@/actions/articles";
+import { Skeleton } from "./ui/skeleton";
 
-export default function Combobox() {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+interface CategoryType {
+  id: string;
+  userId: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface categoryType {
+  id: string;
+  userId: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export default function Combobox({
+  category,
+  setCategory,
+}: {
+  category: string;
+  setCategory: (a: string) => void;
+}) {
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const listRef = useRef<HTMLDivElement>(null);
+
+  // Initial fetch
+  useEffect(() => {
+    loadCategories(1);
+  }, []);
+
+  // Load function
+  const loadCategories = async (targetPage: number) => {
+    if (loading || targetPage > totalPages) return;
+    setLoading(true);
+    try {
+      const { data, currentPage, totalPages } = await GetAllCategories(
+        targetPage as unknown as string
+      );
+      setCategories((prev) => [...prev, ...data]);
+      setPage(currentPage);
+      setTotalPages(totalPages);
+    } catch (error) {
+      console.error("Failed to load categories", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleScroll = () => {
+    if (!listRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = listRef.current;
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
+      loadCategories(page + 1);
+    }
+  };
+
+  const getIDbyName = (name: string) => {
+    return categories.find((cate) => cate.name === name)?.id as string;
+  };
+
+  const [open, setOpen] = useState(false);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -50,32 +93,40 @@ export default function Combobox() {
           aria-expanded={open}
           className="max-md:w-full w-fit justify-between"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+          {category
+            ? categories.find((cate: categoryType) => cate.id === category)
+                ?.name
             : "Select Category..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="max-md:w-full w-fit p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." className="h-9" />
-          <CommandList>
-            <CommandEmpty>No Category found.</CommandEmpty>
+          <CommandInput placeholder="Search Category..." className="h-9" />
+          <CommandList ref={listRef} onScroll={handleScroll}>
+            {loading ? (
+              <div className="space-y-3 m-3">
+                <Skeleton className="h-5 w-full rounded" />
+                <Skeleton className="h-5 w-full rounded" />
+              </div>
+            ) : (
+              <CommandEmpty>No Category found.</CommandEmpty>
+            )}
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {categories.map((cate: categoryType) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={cate.id}
+                  value={cate.id}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    setCategory(currentValue === category ? "" : currentValue);
                     setOpen(false);
                   }}
                 >
-                  {framework.label}
+                  {cate.name}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      category === cate.id ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
