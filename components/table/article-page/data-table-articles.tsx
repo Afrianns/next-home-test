@@ -74,7 +74,7 @@ export function DataTable({ articles }: { articles: allArticleType }) {
             + New Article
           </Link>
         </div>
-        <Table>
+        <Table className="min-w-full">
           <TableHeader>
             <TableRow className="px-10">
               <TableHead className="px-10">Thumbnail</TableHead>

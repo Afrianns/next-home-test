@@ -71,7 +71,7 @@ export default function ArticleForm({
     setIsSubmitting(true);
     toast("Data submitted");
 
-    if (files && files[0]) {
+    if (files && files[0] && !id) {
       const { imageUrl } = await UploadImageArticle(files[0]);
       if (imageUrl) {
         const result = await CreateArticle({
@@ -90,6 +90,7 @@ export default function ArticleForm({
         if (imageUrl) {
           imageURL = imageUrl;
         } else {
+          setIsSubmitting(false);
           return toast("There is an error updating article");
         }
       }
@@ -100,10 +101,12 @@ export default function ArticleForm({
         id,
       });
       if (result) {
+        setIsSubmitting(false);
         return toast("Successfully Update Article");
       }
     }
     setIsSubmitting(false);
+    toast("failed: please try again!");
   }
   return (
     <Form {...form}>

@@ -23,7 +23,7 @@ export const GetAllArticles = async ({
     if (search) params.set("title", search);
     if (category) params.set("category", category);
 
-    const fullUrl = `${url}?limit=1&${params.toString()}`;
+    const fullUrl = `${url}?${params.toString()}`;
 
     const response = await axios.get(fullUrl);
     if (response.status == 200) {

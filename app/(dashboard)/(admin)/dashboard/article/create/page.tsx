@@ -23,8 +23,6 @@ export default function CreateArticle() {
         <CardHeader>New Article</CardHeader>
         <CardContent className="space-y-3">
           <Label>Thumbnail</Label>
-          {/* <UploadIMG files={files} setFiles={setFiles} /> */}
-          {/* <CreateArticleForm /> */}
           <ArticleForm
             title={article.title}
             category={article.category}
