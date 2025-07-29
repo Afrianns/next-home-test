@@ -1,5 +1,6 @@
 "use server";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { cookies } from "next/headers";
 interface loginType {
   username: string;
   password: string;
@@ -56,4 +57,31 @@ export const Register = async ({ username, password, role }: registerType) => {
     .catch(function (error) {
       console.log(error);
     });
+};
+
+export const getUser = async () => {
+  const cookieStore = await cookies();
+  const cookie = cookieStore.get("session")?.value;
+
+  if (!cookie) return;
+
+  try {
+    const result = await axios.get(
+      "https://test-fe.mysellerpintar.com/api/auth/profile",
+      {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      }
+    );
+    if (result.status == 200) {
+      return result.data;
+    }
+  } catch (error) {
+    let err = error as AxiosError;
+    if (err) {
+      throw new Error(`An error occur: ${err.message}`);
+    }
+    throw new Error("there is an error");
+  }
 };

@@ -12,26 +12,12 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-
-import { useState } from "react";
-
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
 import PaginationMenu from "../../pagination";
@@ -40,6 +26,9 @@ import { convertDate } from "@/utils/convertDate";
 import ArticleSearchable from "@/components/articles-searchable";
 import DialogCard from "@/components/dialog-card";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { deleteCategory } from "@/actions/categories";
+import { toast } from "sonner";
 
 interface allCategoriesType {
   data: CategoryType[];
@@ -49,17 +38,22 @@ interface allCategoriesType {
 }
 
 export function DataTable({ categories }: { categories: allCategoriesType }) {
-  // console.log(articles);
-  // const pageSelected = {
-  //   page: 1,
-  //   search: "",
-  //   category: "",
-  // };
   const pageSelected = {
     page: 1,
     search: "",
   };
-  console.log(categories);
+
+  const handleDelete = async (id: string) => {
+    if (id) {
+      const res = await deleteCategory(id);
+      if (res == 200) {
+        toast("successfully deleted");
+      } else {
+        toast("failed to delete");
+      }
+    }
+  };
+
   return (
     <div>
       <p className="p-4 px-5">Total Category: {categories.totalData}</p>
@@ -106,6 +100,8 @@ export function DataTable({ categories }: { categories: allCategoriesType }) {
                     <div className="flex items-center gap-2">
                       <DialogCard
                         name="Edit"
+                        id={category.id}
+                        value={category.name}
                         button={
                           <Link href="#" className="text-blue-500 underline">
                             Edit
@@ -113,22 +109,26 @@ export function DataTable({ categories }: { categories: allCategoriesType }) {
                         }
                       />
                       <Dialog>
-                        <DialogTrigger className="text-red-500 underline">
-                          Delete
+                        <DialogTrigger asChild>
+                          <p className="text-red-500 underline cursor-pointer">
+                            Delete
+                          </p>
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent aria-describedby={undefined}>
                           <DialogHeader>
-                            <DialogTitle>Are you absolutely sure?</DialogTitle>
-                            <DialogDescription>
-                              This action cannot be undone. This will
-                              permanently delete your account and remove your
-                              data from our servers.
-                            </DialogDescription>
+                            <DialogTitle>
+                              Are you sure want to delete this?
+                            </DialogTitle>
                           </DialogHeader>
                           <DialogFooter>
-                            <Button className="bg-blue-500 hover:bg-blue-600">
-                              Confirm
-                            </Button>
+                            <DialogClose asChild>
+                              <Button
+                                onClick={() => handleDelete(category.id)}
+                                className="bg-blue-500 hover:bg-blue-600"
+                              >
+                                Confirm
+                              </Button>
+                            </DialogClose>
                           </DialogFooter>
                         </DialogContent>
                       </Dialog>

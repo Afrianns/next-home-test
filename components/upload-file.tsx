@@ -5,20 +5,23 @@ import {
   DropzoneContent,
   DropzoneEmptyState,
 } from "@/components/ui/shadcn-io/dropzone";
+import Image from "next/image";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function UploadIMG({
   files,
   setFiles,
+  filePreview,
+  setFilePreview,
+  filled = false,
 }: {
   files: File[] | undefined;
   setFiles: (a: File[]) => void;
+  filePreview: string | undefined;
+  setFilePreview: (a: string | undefined) => void;
+  filled?: boolean;
 }) {
-  // const [files, setFiles] = useState<File[] | undefined>();
-
-  const [filePreview, setFilePreview] = useState<string | undefined>();
-
   const handleDrop = (files: File[]) => {
     setFiles(files);
     if (files.length > 0) {
@@ -34,7 +37,7 @@ export default function UploadIMG({
   return (
     <div className="bg-white w-fit p-1">
       <Dropzone
-        accept={{ "image/*": [".png", ".jpg"] }}
+        accept={{ "image/*": [".png", ".jpg", ".jpeg"] }}
         onDrop={handleDrop}
         onError={console.error}
         src={files}
@@ -43,10 +46,10 @@ export default function UploadIMG({
         <DropzoneEmptyState />
         <DropzoneContent>
           {filePreview && (
-            <div className="h-full w-full">
+            <div className="h-[102px] w-full">
               <img
                 alt="Preview"
-                className="absolute top-0 left-0 h-full w-full object-cover"
+                className="absolute top-0 left-0 h-full w-full object-cover z-10"
                 src={filePreview}
               />
             </div>
@@ -66,6 +69,7 @@ export default function UploadIMG({
           </p>
         </div>
       )}
+      {filled && <p className="text-red-500">Image can't be empty</p>}
     </div>
   );
 }

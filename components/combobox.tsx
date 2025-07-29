@@ -37,8 +37,10 @@ interface categoryType {
 export default function Combobox({
   category,
   setCategory,
+  className = "w-fit",
 }: {
   category: string;
+  className?: string;
   setCategory: (a: string) => void;
 }) {
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -50,38 +52,64 @@ export default function Combobox({
 
   // Initial fetch
   useEffect(() => {
-    loadCategories(1);
+    const loadAllCategories = async () => {
+      let currentPage = 1;
+      let totalPages = 1;
+      let allCategories: CategoryType[] = [];
+      setLoading(true);
+      try {
+        while (currentPage <= totalPages) {
+          const {
+            data,
+            currentPage: cp,
+            totalPages: tp,
+          } = await GetAllCategories(currentPage.toString());
+          allCategories = [...allCategories, ...data];
+          currentPage = cp + 1;
+          totalPages = tp;
+        }
+        setCategories(allCategories);
+        setPage(totalPages);
+        setTotalPages(totalPages);
+      } catch (error) {
+        console.error("Failed to load categories", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAllCategories();
   }, []);
 
   // Load function
-  const loadCategories = async (targetPage: number) => {
-    if (loading || targetPage > totalPages) return;
-    setLoading(true);
-    try {
-      const { data, currentPage, totalPages } = await GetAllCategories(
-        targetPage as unknown as string
-      );
-      setCategories((prev) => [...prev, ...data]);
-      setPage(currentPage);
-      setTotalPages(totalPages);
-    } catch (error) {
-      console.error("Failed to load categories", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const loadCategories = async (targetPage: number) => {
+  //   if (loading || targetPage > totalPages) return;
+  //   setLoading(true);
+  //   try {
+  //     const { data, currentPage, totalPages } = await GetAllCategories(
+  //       targetPage as unknown as string
+  //     );
+  //     setCategories((prev) => [...prev, ...data]);
+  //     setPage(currentPage);
+  //     setTotalPages(totalPages);
+  //   } catch (error) {
+  //     console.error("Failed to load categories", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const handleScroll = () => {
-    if (!listRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-    if (scrollTop + clientHeight >= scrollHeight - 10) {
-      loadCategories(page + 1);
-    }
-  };
+  // const handleScroll = () => {
+  //   if (!listRef.current) return;
+  //   const { scrollTop, scrollHeight, clientHeight } = listRef.current;
+  //   if (scrollTop + clientHeight >= scrollHeight - 10) {
+  //     loadCategories(page + 1);
+  //   }
+  // };
 
-  const getIDbyName = (name: string) => {
-    return categories.find((cate) => cate.name === name)?.id as string;
-  };
+  // const getIDbyName = (name: string) => {
+  //   return categories.find((cate) => cate.name === name)?.id as string;
+  // };
 
   const [open, setOpen] = useState(false);
   return (
@@ -91,7 +119,7 @@ export default function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="max-md:w-full w-fit justify-between"
+          className={"max-md:w-full justify-between " + className}
         >
           {category
             ? categories.find((cate: categoryType) => cate.id === category)
@@ -103,7 +131,7 @@ export default function Combobox({
       <PopoverContent className="max-md:w-full w-fit p-0">
         <Command>
           <CommandInput placeholder="Search Category..." className="h-9" />
-          <CommandList ref={listRef} onScroll={handleScroll}>
+          <CommandList>
             {loading ? (
               <div className="space-y-3 m-3">
                 <Skeleton className="h-5 w-full rounded" />

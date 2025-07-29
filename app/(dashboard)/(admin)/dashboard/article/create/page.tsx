@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -7,22 +5,32 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-import UploadIMG from "@/components/upload-file";
-import CreateArticleForm from "./components/createArticleForm";
 import { Label } from "@/components/ui/label";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
+import ArticleForm from "@/components/article-input";
+import FormArticleSkeleton from "@/components/skeleton/form-article-skeleton";
 
 export default function CreateArticle() {
-  const [files, setFiles] = useState<File[] | undefined>();
-  console.log(files);
+  let article = {
+    title: "",
+    category: "",
+    content: "",
+    url: "",
+  };
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<FormArticleSkeleton />}>
       <Card className="w-full max-w-[1080px] mx-auto my-5 bg-gray-50">
         <CardHeader>New Article</CardHeader>
         <CardContent className="space-y-3">
           <Label>Thumbnail</Label>
-          <UploadIMG files={files} setFiles={setFiles} />
-          <CreateArticleForm />
+          {/* <UploadIMG files={files} setFiles={setFiles} /> */}
+          {/* <CreateArticleForm /> */}
+          <ArticleForm
+            title={article.title}
+            category={article.category}
+            content={article.content}
+            url={article.url}
+          />
         </CardContent>
         <CardFooter className="flex-col gap-2"></CardFooter>
       </Card>

@@ -32,6 +32,10 @@ import { ArticleType } from "@/components/table/article-page/article-type";
 import Image from "next/image";
 import PaginationMenu from "../../pagination";
 import ArticleSearchable from "../../articles-searchable";
+import { DeleteArticle } from "@/actions/articles";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import Confirmation from "@/components/Confirmation";
 
 interface allArticleType {
   data: ArticleType[];
@@ -41,20 +45,27 @@ interface allArticleType {
 }
 
 export function DataTable({ articles }: { articles: allArticleType }) {
-  console.log(articles);
   const pageSelected = {
     page: 1,
     search: "",
     category: "",
   };
+
+  const handleDelete = async (id: string) => {
+    let result = await DeleteArticle(id);
+    if (result) {
+      toast("Article successfully Delete");
+    } else {
+      toast("Failed article Delete");
+    }
+  };
+
   return (
     <div>
       <div className="overflow-hidden border">
         <div className="flex items-center justify-between mx-10">
           <div className="flex items-center gap-x-4 py-4">
-            {/* {type == "title" && "c"} */}
             <ArticleSearchable title="search by title..." />
-            {/* <Input placeholder={"search by title..."} className="max-w-sm" /> */}
           </div>
           <Link
             href="/dashboard/article/create"
@@ -98,7 +109,10 @@ export function DataTable({ articles }: { articles: allArticleType }) {
                   </TableCell>
                   <TableCell className="px-10">
                     <div className="flex items-center gap-2">
-                      <Link href="#" className="text-blue-500 underline">
+                      <Link
+                        href={`/preview/${article.id}`}
+                        className="text-blue-500 underline"
+                      >
                         Preview
                       </Link>
                       <Link
@@ -107,9 +121,17 @@ export function DataTable({ articles }: { articles: allArticleType }) {
                       >
                         Edit
                       </Link>
-                      <Link href="#" className="text-red-500 underline">
-                        Delete
-                      </Link>
+
+                      <Confirmation
+                        button={
+                          <Button
+                            onClick={() => handleDelete(article.id)}
+                            className="bg-blue-500 hover:bg-blue-600"
+                          >
+                            Confirm
+                          </Button>
+                        }
+                      />
                     </div>
                   </TableCell>
                 </TableRow>

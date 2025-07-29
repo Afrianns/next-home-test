@@ -122,12 +122,12 @@ export const DropzoneContent = ({
 }: DropzoneContentProps) => {
   const { src } = useDropzoneContext();
 
-  if (!src) {
-    return null;
-  }
-
   if (children) {
     return children;
+  }
+
+  if (!src) {
+    return null;
   }
 
   return (
