@@ -26,7 +26,6 @@ export default function PaginationMenu({
   limit: number;
   pageSelected: pageSelectedType;
 }) {
-  //   const { data, total, page, limit } = await GetAllArticles(pageSelected);
 
   const totalPage = Math.ceil(total / limit);
 

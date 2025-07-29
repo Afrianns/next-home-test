@@ -8,27 +8,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-
-import { useState } from "react";
-
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
-// interface DataTableProps<TData, TValue> {
-//   columns: ColumnDef<TData, TValue>[];
-//   data: TData[];
-//   type: string;
-// }
 
-import { ArticleType } from "@/components/table/article-page/article-type";
 import Image from "next/image";
 import PaginationMenu from "../../pagination";
 import ArticleSearchable from "../../articles-searchable";
@@ -36,13 +17,7 @@ import { DeleteArticle } from "@/actions/articles";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Confirmation from "@/components/Confirmation";
-
-interface allArticleType {
-  data: ArticleType[];
-  total: number;
-  page: number;
-  limit: number;
-}
+import { allArticleType } from "./article-type";
 
 export function DataTable({ articles }: { articles: allArticleType }) {
   const pageSelected = {
@@ -62,17 +37,17 @@ export function DataTable({ articles }: { articles: allArticleType }) {
 
   return (
     <div>
+      <p className="p-4 px-5">Total Articles: {articles.total}</p>
       <div className="overflow-hidden border">
         <div className="flex items-center justify-between mx-10">
           <div className="flex items-center gap-x-4 py-4">
             <ArticleSearchable title="search by title..." />
           </div>
-          <Link
-            href="/dashboard/article/create"
-            className="bg-blue-500 text-white py-1 px-3 rounded"
-          >
-            + New Article
-          </Link>
+          <Button className="bg-blue-500 hover:bg-blue-600">
+            <Link href="/dashboard/article/create" className="text-white">
+              + New Article
+            </Link>
+          </Button>
         </div>
         <Table className="min-w-full">
           <TableHeader>

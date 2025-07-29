@@ -27,6 +27,8 @@ import {
 } from "@/actions/articles";
 import { Loader } from "lucide-react";
 
+import { redirect } from "next/navigation";
+
 const FormSchema = z.object({
   title: z.string().min(5, {
     message: "Title must be at least 5 characters.",
@@ -55,7 +57,6 @@ export default function ArticleForm({
   const [files, setFiles] = useState<File[] | undefined>();
   const [filePreview, setFilePreview] = useState<string | undefined>(url);
 
-  const [filled, setFilled] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -116,7 +117,6 @@ export default function ArticleForm({
           setFilePreview={setFilePreview}
           files={files}
           setFiles={setFiles}
-          filled={filled}
         />
         <FormField
           control={form.control}
@@ -170,11 +170,6 @@ export default function ArticleForm({
           <Button className="w-fit" variant="outline">
             <Link href="/dashboard/article" className="w-fit">
               Cancel
-            </Link>
-          </Button>
-          <Button variant="secondary">
-            <Link href="#" className="w-fit">
-              Preview
             </Link>
           </Button>
           <Button

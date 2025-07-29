@@ -15,7 +15,7 @@ export default async function categoriesPage({
   const { page, search } = await searchParams;
   return (
     <div>
-      <Card className="w-full max-w-[1080px] mx-auto my-5 p-0">
+      <Card className="w-full max-w-[1080px] mx-auto my-5 p-0 rounded-none">
         <CardHeader></CardHeader>
         <CardContent className="px-0 py-0">
           <TablePage page={page} search={search} />

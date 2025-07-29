@@ -16,7 +16,7 @@ import z from "zod";
 import { toast } from "sonner";
 import Link from "next/link";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader } from "lucide-react";
 import { useState } from "react";
 import { usernameValidation } from "@/validation/usernameValidation";
 import { passwordValidation } from "@/validation/passwordValidation";
@@ -48,7 +48,6 @@ const FormSchema = z.object({
   }),
 });
 
-
 const roles = [
   { label: "Admin", value: rolesEnum.ADM },
   { label: "User", value: rolesEnum.USR },
@@ -56,6 +55,7 @@ const roles = [
 
 export default function RegisterForm() {
   const [eye, setEye] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -67,17 +67,14 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    setLoading(true);
     const { username, password, role } = data;
 
     const result = await Register({ username, password, role });
-    console.log(result)
+    if (result == 200) {
+      toast("Successfully Register!");
+    }
+    setLoading(false);
   }
   return (
     <Form {...form}>
@@ -172,7 +169,14 @@ export default function RegisterForm() {
           )}
         />
         <div className="space-y-5 text-center">
-          <Button className="w-full bg-blue-500 hover:bg-blue-800">Register</Button>
+          <Button
+            type="submit"
+            className="w-full bg-blue-500 hover:bg-blue-800"
+            disabled={loading}
+          >
+            {loading && <Loader className="mr-2 animate-spin size-4" />}
+            {loading ? "Loading..." : "Register"}
+          </Button>
           <p>
             Already have an account?{" "}
             <Link href="/login" className="text-blue-500">

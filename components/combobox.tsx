@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -44,11 +44,7 @@ export default function Combobox({
   setCategory: (a: string) => void;
 }) {
   const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
-
-  const listRef = useRef<HTMLDivElement>(null);
 
   // Initial fetch
   useEffect(() => {
@@ -70,8 +66,6 @@ export default function Combobox({
           totalPages = tp;
         }
         setCategories(allCategories);
-        setPage(totalPages);
-        setTotalPages(totalPages);
       } catch (error) {
         console.error("Failed to load categories", error);
       } finally {
@@ -83,7 +77,7 @@ export default function Combobox({
   const [open, setOpen] = useState(false);
   return (
     <>
-      {loading || (categories.length <= 0) ? (
+      {loading || categories.length <= 0 ? (
         <Skeleton className="w-full h-10 rounded-b-sm"></Skeleton>
       ) : (
         <Popover open={open} onOpenChange={setOpen}>

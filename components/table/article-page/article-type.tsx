@@ -1,11 +1,3 @@
-"use client";
-
-import { ColumnDef } from "@tanstack/react-table";
-import Image from "next/image";
-import Link from "next/link";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export interface ArticleType {
   id: string;
   userId: string;
@@ -26,4 +18,17 @@ export interface ArticleType {
     id: string;
     username: string;
   };
+}
+
+export interface pageSelectedType {
+  page: number | undefined;
+  search: string | undefined;
+  category: string | undefined;
+}
+
+export interface allArticleType {
+  data: ArticleType[];
+  total: number;
+  page: number;
+  limit: number;
 }

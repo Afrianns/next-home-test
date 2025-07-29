@@ -19,7 +19,7 @@ export default function CreateArticle() {
   };
   return (
     <Suspense fallback={<FormArticleSkeleton />}>
-      <Card className="w-full max-w-[1080px] mx-auto my-5 bg-gray-50">
+      <Card className="w-full max-w-[1080px] mx-auto my-5 bg-gray-50 rounded-none">
         <CardHeader>New Article</CardHeader>
         <CardContent className="space-y-3">
           <Label>Thumbnail</Label>

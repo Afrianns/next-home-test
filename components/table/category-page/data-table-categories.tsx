@@ -21,21 +21,12 @@ import {
 import Link from "next/link";
 
 import PaginationMenu from "../../pagination";
-import { CategoryType } from "./category-type";
-import { convertDate } from "@/utils/convertDate";
+import { allCategoriesType, CategoryType } from "./category-type";
 import ArticleSearchable from "@/components/articles-searchable";
 import DialogCard from "@/components/dialog-card";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { deleteCategory } from "@/actions/categories";
 import { toast } from "sonner";
-
-interface allCategoriesType {
-  data: CategoryType[];
-  totalData: number;
-  currentPage: number;
-  totalPages: number;
-}
 
 export function DataTable({ categories }: { categories: allCategoriesType }) {
   const pageSelected = {
@@ -94,7 +85,7 @@ export function DataTable({ categories }: { categories: allCategoriesType }) {
                     <p className="text-wrap w-fit">{category.name}</p>
                   </TableCell>
                   <TableCell className="px-10">
-                    {convertDate(category.createdAt)}
+                    {new Date(category.createdAt).toLocaleString()}
                   </TableCell>
                   <TableCell className="px-10">
                     <div className="flex items-center gap-2">

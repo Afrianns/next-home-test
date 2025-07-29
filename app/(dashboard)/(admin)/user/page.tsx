@@ -12,7 +12,7 @@ import Link from "next/link";
 export default async function UserPage() {
   const { username, role } = await getUser();
   return (
-    <Card className="w-full min-h-[80vh] mx-auto my-5 p-0 m-5 rounded-e-none">
+    <Card className="w-full min-h-[80vh] mx-auto my-5 p-5 rounded-none">
       <CardHeader></CardHeader>
       <CardContent className="px-0 py-0">
         <div className="flex justify-center flex-col items-center h-full space-y-3">
@@ -24,14 +24,22 @@ export default async function UserPage() {
             </AvatarFallback>
           </Avatar>
 
-          <div className="w-full max-w-[500px] bg-gray-200 py-3 px-5">
-            Name: {username}
-          </div>
-          <div className="w-full max-w-[500px] bg-gray-200 py-3 px-5">
-            Name: {role}
-          </div>
+          <table className="table-auto">
+            <tbody className="space-y-3">
+              <tr className="w-full max-w-[400px] bg-gray-200 py-3 px-5 grid grid-cols-5">
+                <td>Username</td>
+                <td className="px-2">:</td>
+                <td className="w-48 text-center">{username}</td>
+              </tr>
+              <tr className="w-full max-w-[400px] bg-gray-200 py-3 px-5 grid grid-cols-5">
+                <td>Role</td>
+                <td className="px-2">:</td>
+                <td className="w-48 text-center">{role}</td>
+              </tr>
+            </tbody>
+          </table>
 
-          <Button className="bg-blue-500 w-full max-w-[500px] hover:bg-blue-600">
+          <Button className="bg-blue-500 w-full max-w-[400px] hover:bg-blue-600">
             <Link href={"/dashboard"}>Back to Dashboard</Link>
           </Button>
         </div>

@@ -20,9 +20,9 @@ import { useState } from "react";
 import { usernameValidation } from "@/validation/usernameValidation";
 import { passwordValidation } from "@/validation/passwordValidation";
 import { Login } from "@/actions/auth";
-import { exportPKCS8, exportSPKI, generateKeyPair } from "jose";
 import { createSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { Loader } from "lucide-react";
 
 const FormSchema = z.object({
   username: usernameValidation,
@@ -31,6 +31,7 @@ const FormSchema = z.object({
 
 export default function LoginForm() {
   const [eye, setEye] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -42,6 +43,7 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoading(true);
     const { username, password } = data;
 
     const result = await Login({ username, password });
@@ -51,6 +53,7 @@ export default function LoginForm() {
       toast("Successfully Login");
       redirect("/articles");
     }
+    setLoading(true);
   }
 
   return (
@@ -89,8 +92,14 @@ export default function LoginForm() {
           )}
         />
         <div className="space-y-5 text-center">
-          <Button className="w-full bg-blue-500 hover:bg-blue-800">
-            Login
+          <Button
+            type="submit"
+            className="w-full bg-blue-500 hover:bg-b
+            
+            disabled={loading}
+          >
+            {loading && <Loader className="mr-2 animate-spin size-4" />}
+            {loading ? "Loading..." : "Login"}
           </Button>
           <p>
             Don't have an account?{" "}

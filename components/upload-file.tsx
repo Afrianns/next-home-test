@@ -14,14 +14,14 @@ export default function UploadIMG({
   setFiles,
   filePreview,
   setFilePreview,
-  filled = false,
 }: {
   files: File[] | undefined;
   setFiles: (a: File[]) => void;
   filePreview: string | undefined;
   setFilePreview: (a: string | undefined) => void;
-  filled?: boolean;
 }) {
+  const [filled, setFilled] = useState(false);
+
   const handleDrop = (files: File[]) => {
     setFiles(files);
     if (files.length > 0) {

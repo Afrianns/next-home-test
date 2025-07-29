@@ -27,7 +27,6 @@ export const Login = async ({ username, password }: loginType) => {
     );
 
     if (response.status == 200) {
-      console.log(response.status);
       return {
         status: response.status,
         result: response.data,
@@ -35,28 +34,36 @@ export const Login = async ({ username, password }: loginType) => {
       };
     }
   } catch (error) {
-    console.log(error);
+    let err = error as AxiosError;
+    if (err) {
+      throw new Error(`An error occur: ${err.message}`);
+    }
+    throw new Error("there is an error");
   }
 };
 
 export const Register = async ({ username, password, role }: registerType) => {
   console.log(username, password);
 
-  axios
-    .post("https://test-fe.mysellerpintar.com/api/auth/register", {
-      username: username,
-      password: password,
-      role: role,
-    })
-    .then(function (response) {
-      if (response.status == 201) {
-        return { status: response.status, message: "Successfully Register" };
+  try {
+    const response = await axios.post(
+      "https://test-fe.mysellerpintar.com/api/auth/register",
+      {
+        username: username,
+        password: password,
+        role: role,
       }
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    );
+    if (response.status == 200) {
+      return response.status;
+    }
+  } catch (error) {
+    let err = error as AxiosError;
+    if (err) {
+      throw new Error(`An error occur: ${err.message}`);
+    }
+    throw new Error("there is an error");
+  }
 };
 
 export const getUser = async () => {

@@ -7,8 +7,9 @@ import { Separator } from "@/components/ui/separator";
 
 import { convertDate } from "@/utils/convertDate";
 import { sanitizeHTML } from "@/utils/sanitizeHTML";
-import { Suspense } from "react";
+
 import DetailArticleSkeleton from "@/components/skeleton/detail-article-skeleton";
+import { Suspense } from "react";
 
 export default async function Page({
   params,

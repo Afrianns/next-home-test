@@ -14,7 +14,7 @@ export default async function AdminPage({
 }) {
   const { page, cId, search } = await searchParams;
   return (
-    <Card className="w-full max-w-[1080px] mx-auto my-5 p-0">
+    <Card className="w-full max-w-[1080px] mx-auto my-5 p-0 rounded-none">
       <CardHeader></CardHeader>
       <CardContent className="px-0 py-0">
         <TablePage page={page} category={cId} search={search} />

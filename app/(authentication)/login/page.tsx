@@ -1,5 +1,3 @@
-// import Image from "next/image";
-// import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -7,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import LoginForm from "./components/LoginForm";
 
 export default function InputForm() {
