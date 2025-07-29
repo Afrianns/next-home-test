@@ -1,4 +1,4 @@
-import { Home, Inbox, Settings } from "lucide-react";
+import { Home, LogOut, Tag } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -10,6 +10,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export function AppSidebar() {
   const items = [
@@ -21,14 +23,16 @@ export function AppSidebar() {
     {
       title: "Categories",
       url: "/dashboard/categories",
-      icon: Inbox,
-    },
-    {
-      title: "Logout",
-      url: "#",
-      icon: Settings,
+      icon: Tag,
     },
   ];
+
+  const Logout = async () => {
+    const cookieStore = await cookies();
+    cookieStore.delete("session");
+    return redirect("/");
+  };
+
   return (
     <Sidebar className="text-white">
       <SidebarHeader>
@@ -48,6 +52,12 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuItem key="Logout" className="w-full h-10 p-2">
+                <SidebarMenuButton onClick={Logout} asChild>
+                  <LogOut size={64} />
+                  <h3 className="text-lg">Log out</h3>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

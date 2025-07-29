@@ -1,17 +1,19 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
+import { getUser } from "@/actions/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getUser } from "@/actions/auth";
+import { cookies } from "next/headers";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function adminLayout({
   children,
@@ -19,6 +21,11 @@ export default async function adminLayout({
   children: React.ReactNode;
 }>) {
   const { username } = await getUser();
+  const Logout = async () => {
+    const cookieStore = await cookies();
+    cookieStore.delete("session");
+    return redirect("/");
+  };
   return (
     <TooltipProvider>
       <SidebarProvider>
@@ -41,7 +48,9 @@ export default async function adminLayout({
                       <DropdownMenuItem>
                         <Link href={"/user"}>Profile</Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>Logout</DropdownMenuItem>
+                      <DropdownMenuItem onClick={Logout}>
+                        Logout
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>

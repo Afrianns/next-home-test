@@ -5,9 +5,6 @@ import {
   DropzoneContent,
   DropzoneEmptyState,
 } from "@/components/ui/shadcn-io/dropzone";
-import Image from "next/image";
-
-import { useEffect, useRef, useState } from "react";
 
 export default function UploadIMG({
   files,
@@ -20,7 +17,6 @@ export default function UploadIMG({
   filePreview: string | undefined;
   setFilePreview: (a: string | undefined) => void;
 }) {
-  const [filled, setFilled] = useState(false);
 
   const handleDrop = (files: File[]) => {
     setFiles(files);
@@ -69,7 +65,6 @@ export default function UploadIMG({
           </p>
         </div>
       )}
-      {filled && <p className="text-red-500">Image can't be empty</p>}
     </div>
   );
 }

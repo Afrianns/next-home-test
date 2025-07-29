@@ -1,10 +1,9 @@
-import Image from "next/image";
-import AllArticles from "./components/render-articles";
 import ArticleSearchable from "@/components/articles-searchable";
 import Nav from "@/components/nav";
+import Image from "next/image";
 import { Suspense } from "react";
 import ArticlesSkeleton from "./articles-skeleton";
-import { useCategoryStore } from "@/store/categoriesStore";
+import AllArticles from "./components/render-articles";
 
 export default async function UserPage({
   searchParams,

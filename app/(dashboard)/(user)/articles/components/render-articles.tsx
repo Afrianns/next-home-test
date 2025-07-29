@@ -1,8 +1,8 @@
 "use server";
 
-import truncate, { type IOptions } from "truncate-html";
 import { GetAllArticles } from "@/actions/articles";
 import ImageRender from "@/components/image-render";
+import truncate from "truncate-html";
 
 import { ArticleType } from "@/components/table/article-page/article-type";
 import { Badge } from "@/components/ui/badge";

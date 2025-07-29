@@ -94,8 +94,7 @@ export default function LoginForm() {
         <div className="space-y-5 text-center">
           <Button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-b
-            
+            className="w-full bg-blue-500 hover:bg-blue-600"
             disabled={loading}
           >
             {loading && <Loader className="mr-2 animate-spin size-4" />}
