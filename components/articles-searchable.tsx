@@ -37,10 +37,10 @@ export default function ArticleSearchable({
   };
   return (
     <div
-      className={
-        (cn("flex items-center gap-x-3 max-md:flex-col max-md:gap-y-2 "),
-        className)
-      }
+      className={cn(
+        "flex items-center gap-x-3 max-md:flex-col max-md:gap-y-2",
+        className
+      )}
     >
       {withCategory && (
         <Combobox category={category} setCategory={setCategory} />

@@ -47,11 +47,11 @@ export default function LoginForm() {
     const { username, password } = data;
 
     const result = await Login({ username, password });
-    console.log(result);
+
     if (result?.result) {
       createSession(result.result);
       toast("Successfully Login");
-      redirect("/articles");
+      return redirect("/articles");
     }
     setLoading(true);
   }
