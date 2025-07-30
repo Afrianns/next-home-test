@@ -11,18 +11,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { toast } from "sonner";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
 
-import { useState } from "react";
-import { usernameValidation } from "@/validation/usernameValidation";
-import { passwordValidation } from "@/validation/passwordValidation";
 import { Login } from "@/actions/auth";
 import { createSession } from "@/lib/session";
-import { redirect } from "next/navigation";
+import { passwordValidation } from "@/validation/passwordValidation";
+import { usernameValidation } from "@/validation/usernameValidation";
 import { Loader } from "lucide-react";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 
 const FormSchema = z.object({
   username: usernameValidation,
@@ -101,7 +101,7 @@ export default function LoginForm() {
             {loading ? "Loading..." : "Login"}
           </Button>
           <p>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/register" className="text-blue-500">
               Register
             </Link>{" "}

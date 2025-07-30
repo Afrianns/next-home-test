@@ -20,13 +20,13 @@ import {
 
 import Link from "next/link";
 
-import PaginationMenu from "../../pagination";
-import { allCategoriesType, CategoryType } from "./category-type";
+import { deleteCategory } from "@/actions/categories";
 import ArticleSearchable from "@/components/articles-searchable";
 import DialogCard from "@/components/dialog-card";
 import { Button } from "@/components/ui/button";
-import { deleteCategory } from "@/actions/categories";
 import { toast } from "sonner";
+import PaginationMenu from "../../pagination";
+import { allCategoriesType } from "./category-type";
 
 export function DataTable({ categories }: { categories: allCategoriesType }) {
   const pageSelected = {

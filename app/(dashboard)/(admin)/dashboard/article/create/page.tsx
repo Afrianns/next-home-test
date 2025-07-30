@@ -5,13 +5,13 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-import { Label } from "@/components/ui/label";
-import { Suspense } from "react";
 import ArticleForm from "@/components/article-input";
 import FormArticleSkeleton from "@/components/skeleton/form-article-skeleton";
+import { Label } from "@/components/ui/label";
+import { Suspense } from "react";
 
 export default function CreateArticle() {
-  let article = {
+  const article = {
     title: "",
     category: "",
     content: "",

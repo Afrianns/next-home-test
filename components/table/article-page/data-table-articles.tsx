@@ -10,13 +10,13 @@ import {
 
 import Link from "next/link";
 
-import Image from "next/image";
-import PaginationMenu from "../../pagination";
-import ArticleSearchable from "../../articles-searchable";
 import { DeleteArticle } from "@/actions/articles";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import Confirmation from "@/components/Confirmation";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { toast } from "sonner";
+import ArticleSearchable from "../../articles-searchable";
+import PaginationMenu from "../../pagination";
 import { allArticleType } from "./article-type";
 
 export function DataTable({ articles }: { articles: allArticleType }) {
@@ -27,7 +27,7 @@ export function DataTable({ articles }: { articles: allArticleType }) {
   };
 
   const handleDelete = async (id: string) => {
-    let result = await DeleteArticle(id);
+    const result = await DeleteArticle(id);
     if (result) {
       toast("Article successfully Delete");
     } else {
@@ -62,10 +62,7 @@ export function DataTable({ articles }: { articles: allArticleType }) {
           <TableBody>
             {articles.data.map((article) => {
               return (
-                <TableRow
-                  key={article.id}
-                  // data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={article.id}>
                   <TableCell className="px-10">
                     <Image
                       src={article.imageUrl}

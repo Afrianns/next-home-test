@@ -10,7 +10,7 @@ export default async function UserPage({
 }: {
   searchParams: Promise<{ page?: number; cId?: string; search?: string }>;
 }) {
-  let { page, cId, search } = await searchParams;
+  const { page, cId, search } = await searchParams;
 
   return (
     <div>

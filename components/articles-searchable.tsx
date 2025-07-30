@@ -1,8 +1,8 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Combobox from "./combobox";
 import { Input } from "./ui/input";
-import { useRouter } from "next/navigation";
 
 export default function ArticleSearchable({
   withCategory = true,
@@ -14,9 +14,8 @@ export default function ArticleSearchable({
   title: string;
 }) {
   const [search, setSearch] = useState("");
-
   const [category, setCategory] = useState("");
-  console.log(search, category);
+  
   const router = useRouter();
 
   useEffect(() => {
