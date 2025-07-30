@@ -3,10 +3,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Combobox from "./combobox";
 import { Input } from "./ui/input";
+import { cn } from "@/lib/utils";
 
 export default function ArticleSearchable({
   withCategory = true,
-  className,
+  className = "",
   title,
 }: {
   withCategory?: boolean;
@@ -15,7 +16,7 @@ export default function ArticleSearchable({
 }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
-  
+
   const router = useRouter();
 
   useEffect(() => {
@@ -37,7 +38,8 @@ export default function ArticleSearchable({
   return (
     <div
       className={
-        "flex items-center gap-x-3 max-md:flex-col max-md:gap-y-2 " + className
+        (cn("flex items-center gap-x-3 max-md:flex-col max-md:gap-y-2 "),
+        className)
       }
     >
       {withCategory && (
