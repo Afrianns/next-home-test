@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { InfoCircledIcon, TrashIcon } from "@radix-ui/react-icons";
 import { NodeViewWrapper, type NodeViewProps } from "@tiptap/react";
+import Image from "next/image";
 import * as React from "react";
 import { Controlled as ControlledZoom } from "react-medium-image-zoom";
 import { Spinner } from "../../../components/spinner";
@@ -12,7 +13,6 @@ import type { UploadReturnType } from "../image";
 import { ActionButton, ActionWrapper, ImageActions } from "./image-actions";
 import { ImageOverlay } from "./image-overlay";
 import { ResizeHandle } from "./resize-handle";
-import Image from "next/image";
 
 const MAX_HEIGHT = 600;
 const MIN_HEIGHT = 120;
@@ -205,7 +205,7 @@ export const ImageViewBlock: React.FC<NodeViewProps> = ({
         }));
 
         updateAttributes(normalizedData);
-      } catch (error) {
+      } catch {
         setImageState((prev) => ({
           ...prev,
           error: true,

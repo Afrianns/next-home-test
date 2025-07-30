@@ -5,6 +5,7 @@ import {
   DropzoneContent,
   DropzoneEmptyState,
 } from "@/components/ui/shadcn-io/dropzone";
+import Image from "next/image";
 
 export default function UploadIMG({
   files,
@@ -17,7 +18,6 @@ export default function UploadIMG({
   filePreview: string | undefined;
   setFilePreview: (a: string | undefined) => void;
 }) {
-
   const handleDrop = (files: File[]) => {
     setFiles(files);
     if (files.length > 0) {
@@ -43,7 +43,7 @@ export default function UploadIMG({
         <DropzoneContent>
           {filePreview && (
             <div className="h-[102px] w-full">
-              <img
+              <Image
                 alt="Preview"
                 className="absolute top-0 left-0 h-full w-full object-cover z-10"
                 src={filePreview}

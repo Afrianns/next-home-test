@@ -26,14 +26,6 @@ interface CategoryType {
   updatedAt: string;
 }
 
-interface categoryType {
-  id: string;
-  userId: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export default function Combobox({
   category,
   setCategory,
@@ -46,7 +38,6 @@ export default function Combobox({
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Initial fetch
   useEffect(() => {
     const loadAllCategories = async () => {
       let currentPage = 1;
@@ -55,7 +46,7 @@ export default function Combobox({
       setLoading(true);
       try {
         while (currentPage <= totalPages) {
-          console.log(currentPage, totalPages);
+          
           const {
             data,
             currentPage: cp,
@@ -89,7 +80,7 @@ export default function Combobox({
               className={"max-md:w-full justify-between " + className}
             >
               {category
-                ? categories.find((cate: categoryType) => cate.id === category)
+                ? categories.find((cate: CategoryType) => cate.id === category)
                     ?.name
                 : "Select Category..."}
               <ChevronsUpDown className="opacity-50" />
@@ -108,7 +99,7 @@ export default function Combobox({
                   <CommandEmpty>No Category found.</CommandEmpty>
                 )}
                 <CommandGroup>
-                  {categories.map((cate: categoryType) => (
+                  {categories.map((cate: CategoryType) => (
                     <CommandItem
                       key={cate.id}
                       value={cate.id}
