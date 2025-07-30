@@ -21,8 +21,8 @@ import { createSession } from "@/lib/session";
 import { passwordValidation } from "@/validation/passwordValidation";
 import { usernameValidation } from "@/validation/usernameValidation";
 import { Loader } from "lucide-react";
-import { redirect } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   username: usernameValidation,
@@ -30,6 +30,7 @@ const FormSchema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
   const [eye, setEye] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -51,7 +52,7 @@ export default function LoginForm() {
     if (result?.result) {
       createSession(result.result);
       toast("Successfully Login");
-      return redirect("/articles");
+      router.push("/articles");
     }
     setLoading(true);
   }

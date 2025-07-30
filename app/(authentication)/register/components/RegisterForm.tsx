@@ -11,29 +11,31 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { toast } from "sonner";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
 
-import { Check, ChevronsUpDown, Loader } from "lucide-react";
-import { useState } from "react";
-import { usernameValidation } from "@/validation/usernameValidation";
-import { passwordValidation } from "@/validation/passwordValidation";
 import {
   Command,
   CommandGroup,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { passwordValidation } from "@/validation/passwordValidation";
+import { usernameValidation } from "@/validation/usernameValidation";
+import { Check, ChevronsUpDown, Loader } from "lucide-react";
+import { useState } from "react";
 
+import { Register } from "@/actions/auth";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Register } from "@/actions/auth";
+
+import { useRouter } from "next/navigation";
 
 enum rolesEnum {
   ADM = "Admin",
@@ -65,6 +67,7 @@ export default function RegisterForm() {
       password: "",
     },
   });
+  const router = useRouter();
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setLoading(true);
@@ -73,6 +76,7 @@ export default function RegisterForm() {
     const result = await Register({ username, password, role });
     if (result == 200) {
       toast("Successfully Register!");
+      router.push("/login");
     }
     setLoading(false);
   }
