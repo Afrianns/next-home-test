@@ -1,4 +1,5 @@
 "use server";
+
 import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 interface loginType {
@@ -34,11 +35,7 @@ export const Login = async ({ username, password }: loginType) => {
       };
     }
   } catch (error) {
-    let err = error as AxiosError;
-    if (err) {
-      throw new Error(`An error occur: ${err.message}`);
-    }
-    throw new Error("there is an error");
+    defaultError(error);
   }
 };
 
@@ -58,11 +55,7 @@ export const Register = async ({ username, password, role }: registerType) => {
       return response.status;
     }
   } catch (error) {
-    let err = error as AxiosError;
-    if (err) {
-      throw new Error(`An error occur: ${err.message}`);
-    }
-    throw new Error("there is an error");
+    defaultError(error);
   }
 };
 
@@ -85,10 +78,14 @@ export const getUser = async () => {
       return result.data;
     }
   } catch (error) {
-    let err = error as AxiosError;
-    if (err) {
-      throw new Error(`An error occur: ${err.message}`);
-    }
-    throw new Error("there is an error");
+    defaultError(error);
   }
+};
+
+const defaultError = (error: any) => {
+  let err = error as AxiosError;
+  if (err) {
+    throw new Error(`An error occur: ${err.message}`);
+  }
+  throw new Error("there is an error");
 };

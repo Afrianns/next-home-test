@@ -1,33 +1,31 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getUser } from "@/actions/auth";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import Logout from "./logout-dropdown";
 
-export default function Nav({ className }: React.ComponentProps<"div">) {
+export default async function Nav({ className }: React.ComponentProps<"div">) {
+  const { username } = await getUser();
   return (
     <div className={className}>
       <section className="flex justify-between items-center w-full max-w-[1080px] mx-auto py-4 max-md:px-4">
         <p>LOGO</p>
         <div className="flex items-center gap-x-3">
           <Avatar>
-            <AvatarImage src="/young-male-designer.jpg" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>
+              {username.split("")[0].toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <DropdownMenu>
-            <DropdownMenuTrigger>Name</DropdownMenuTrigger>
+            <DropdownMenuTrigger className="underline">
+              {username}
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
+              <Logout />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

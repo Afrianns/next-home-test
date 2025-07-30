@@ -36,7 +36,11 @@ export default function ArticleSearchable({
     setSearch(event?.target.value);
   };
   return (
-    <div className={"flex items-center gap-x-3 max-md:flex-col max-md:gap-y-2 " + className}>
+    <div
+      className={
+        "flex items-center gap-x-3 max-md:flex-col max-md:gap-y-2 " + className
+      }
+    >
       {withCategory && (
         <Combobox category={category} setCategory={setCategory} />
       )}
